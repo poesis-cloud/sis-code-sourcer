@@ -1,0 +1,8 @@
+scope: product
+name: SIS Code Sourcer
+milestones:
+  - version: v0.1.0
+    current: true
+  - version: v1.0.0
+    features:
+      - https://github.com/poesis-cloud/sis-code-sourcer/issues/1
