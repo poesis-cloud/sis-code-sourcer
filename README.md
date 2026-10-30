@@ -241,3 +241,10 @@ The authoritative skill for the REST architecture is
 - Service component diagram: [component.puml](../../sie/sie-definition-blackboard-manager/def/blackboard/component.puml)
 - Components (this sourcer): [components.puml](def/components.puml)
 - Sourcing workflow: [sourcing-workflow.puml](def/sourcing-workflow.puml)
+
+<!-- roadmap:start -->
+## Roadmap
+
+![Roadmap](docs/roadmap.svg)
+
+<!-- roadmap:end -->
