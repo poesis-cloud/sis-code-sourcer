@@ -1,6 +1,6 @@
-# Copilot Instructions — ITIP Definition Blackboard Repository Sourcer
+# Copilot Instructions — SIS Code Sourcer
 
-This repo is the **client-side sourcer** that reads ITIP governance framework data and posts it as Contributions to the Definition Blackboard Manager REST service. All agents must read `PROJECT_BRIEF.md` before starting any work.
+This repo is the **client-side sourcer** that reads OIP governance framework data and posts it as Contributions to the Blackboard Manager REST service. All agents must read `PROJECT_BRIEF.md` before starting any work.
 
 ---
 
@@ -23,7 +23,7 @@ Sprint planning, GitHub Issues, coordination. **Never writes application code.**
 ### Nova / Sage / Milo — Dev Team
 Client REST contract, panel/contribution design, KS-as-HTTP-poster implementation.
 
-**Skills to invoke:** `definition-blackboard-manager`, `gsm-knowledge`, `itip-framework-sourcing`, `agent-customization`, `update-skills`, `commit`, `create-pr`, `context-map`, `refactor-plan`
+**Skills to invoke:** `blackboard-manager`, `gsm-knowledge`, `oip-framework-sourcing`, `agent-customization`, `update-skills`, `commit`, `create-pr`, `context-map`, `refactor-plan`
 
 **Responsibilities:**
 - Implement `KnowledgeSource` abstract contract and all 18 KS subclasses
@@ -52,7 +52,7 @@ Test coverage, Blackboard invariant tests, contribution validation tests.
 ## Domain Rules (mandatory for all agents)
 
 ### Blackboard Client Contract
-1. **Always declare panels before posting contributions.** Call `DefinitionBlackboardService.declarePanel()` for each of the 3 panels (`itip:Definition`, `itip:Archetype`, `itip:Statement`) before any `contributeToBlackboard()` call.
+1. **Always declare panels before posting contributions.** Call `DefinitionBlackboardService.declarePanel()` for each of the 3 panels (`sis:Definition`, `sis:Archetype`, `sis:Statement`) before any `contributeToBlackboard()` call.
 2. **Promotion DAG is read-up only:** `Definition -> Archetype -> Statement`. A KS at stage N may only read slots from stages <= N.
 3. **Core invariant:** `confidence.score` must be `< 1.0` (exclusive). A score of 1.0 is a deterministic fact — never a blackboard contribution.
 

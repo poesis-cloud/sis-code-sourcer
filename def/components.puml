@@ -29,10 +29,10 @@ skinparam noteBorderColor #57606A
 ' extension reported "No valid diagram found here!").
 
 ' ============================================================
-' CD - ITIP Definition Blackboard Repository Sourcer
+' CD - SIS Code Sourcer
 ' ============================================================
 
-frame "CD - ITIP Definition Blackboard Repository Sourcer - components" as F1 {
+frame "CD - SIS Code Sourcer - components" as F1 {
 
   package "KS contract" as KSAPI <<contract>> {
     abstract class KnowledgeSource <<abstract>> {

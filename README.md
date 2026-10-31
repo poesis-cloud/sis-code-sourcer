@@ -1,6 +1,6 @@
-# ITIP Definition Blackboard Repository Sourcer (`itip/itip-definition-blackboard-repository-sourcer`)
+# SIS Code Sourcer (`sis/sis-code-sourcer`)
 
-[![CI](https://github.com/poesis-cloud/itip-definition-blackboard-repository-sourcer/actions/workflows/ci.yaml/badge.svg)](https://github.com/poesis-cloud/itip-definition-blackboard-repository-sourcer/actions/workflows/ci.yaml)
+[![CI](https://github.com/poesis-cloud/sis-code-sourcer/actions/workflows/ci.yaml/badge.svg)](https://github.com/poesis-cloud/sis-code-sourcer/actions/workflows/ci.yaml)
 [![Version](https://img.shields.io/badge/version-0.0-lightgrey)](https://docs.poesis.cloud/milestones/)
 [![Coverage gate](https://img.shields.io/badge/JaCoCo-%E2%89%A595%25%20instruction%20coverage%20enforced-brightgreen)](pom.xml)
 [![Java](https://img.shields.io/badge/Java-21-orange)](pom.xml)
@@ -10,7 +10,7 @@
 A **client sourcer** that turns a code repository (an IT system's
 source tree) into GSM contributions posted to a Definition Blackboard.
 Runs as a single-JVM client process and speaks REST to the
-[Definition Blackboard Manager](../../sie/sie-definition-blackboard-manager/).
+[Blackboard Manager](../../sis/sis-blackboard-manager/).
 
 This document is **design-time** only.
 
@@ -84,7 +84,7 @@ Every one of the 18 spine KSs `extends KnowledgeSource`.
 | `LeidenAlgService`            | `<<service,stateless,algorithm>>` | Pure community-detection algorithm over an in-memory graph.                                               |
 | `MappingService`              | `<<service,stateless,facade>>`    | Source-node-to-archetype mapping + property extraction; lists supported archetypes and gaps.              |
 | `InferenceService`            | `<<service,external>>`            | LLM completion (used by Statement KSs in LLM-driven mode).                                                |
-| `DefinitionBlackboardService` | `<<service,external>>`            | REST client to the Definition Blackboard Manager (panel declaration, contribution POST, GET state, seal). |
+| `DefinitionBlackboardService` | `<<service,external>>`            | REST client to the Blackboard Manager (panel declaration, contribution POST, GET state, seal). |
 
 Stateful services lazy-prime themselves on first call. Their internal
 state is never persisted; it is fully reconstructible from the
@@ -97,9 +97,9 @@ For each subject S in
 
 | KS                     | Writes blackboard slot         | Embedded non-deterministic selection                                                                                                       |
 | ---------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `S`​`IdentificationKs` | `itip:Definition.S`​`Identity` | Subject-specific (Leiden for Structure; taint-reach for Effector/Receptor/Interaction; structural heuristics for Mechanism/DataArchetype). |
-| `S`​`ArchetypingKs`    | `itip:Archetype.S`​`Archetype` | Archetype-fit scoring against the archetype catalogue, via `MappingService`.                                                               |
-| `S`​`StatementKs`      | `itip:Statement.S`​`Statement` | Optional LLM-driven shaping via `InferenceService`.                                                                                        |
+| `S`​`IdentificationKs` | `sis:Definition.S`​`Identity` | Subject-specific (Leiden for Structure; taint-reach for Effector/Receptor/Interaction; structural heuristics for Mechanism/DataArchetype). |
+| `S`​`ArchetypingKs`    | `sis:Archetype.S`​`Archetype` | Archetype-fit scoring against the archetype catalogue, via `MappingService`.                                                               |
+| `S`​`StatementKs`      | `sis:Statement.S`​`Statement` | Optional LLM-driven shaping via `InferenceService`.                                                                                        |
 
 **What Identification does that Archetyping does not.**
 Identification answers _"is there a GSM subject of type S here at
@@ -113,7 +113,7 @@ for each (false positive vs. wrong archetype binding).
 ## Repository layout
 
 ```
-itip/itip-definition-blackboard-repository-sourcer/
+sis/sis-code-sourcer/
   README.md                  (this file)
   def/
     components.puml          (CD - 4 packages: KS contract / Services / KSs / Blackboard)
@@ -137,9 +137,9 @@ one per GSM subject:
 
 | Panel             | Stage semantics                                                         | Slots (one per subject)                                                                                                                |
 | ----------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `itip:Definition` | Candidate identification: "this thing is a candidate `<Subject>`"       | `StructureIdentity`, `MechanismIdentity`, `DataArchetypeIdentity`, `EffectorIdentity`, `ReceptorIdentity`, `InteractionIdentity`       |
-| `itip:Archetype`  | Archetype match: "this candidate matches a known `<Subject>` archetype" | `StructureArchetype`, `MechanismArchetype`, `DataArchetypeArchetype`, `EffectorArchetype`, `ReceptorArchetype`, `InteractionArchetype` |
-| `itip:Statement`  | Draft GSM Statement: "here is the materialized statement"               | `StructureStatement`, `MechanismStatement`, `DataArchetypeStatement`, `EffectorStatement`, `ReceptorStatement`, `InteractionStatement` |
+| `sis:Definition` | Candidate identification: "this thing is a candidate `<Subject>`"       | `StructureIdentity`, `MechanismIdentity`, `DataArchetypeIdentity`, `EffectorIdentity`, `ReceptorIdentity`, `InteractionIdentity`       |
+| `sis:Archetype`  | Archetype match: "this candidate matches a known `<Subject>` archetype" | `StructureArchetype`, `MechanismArchetype`, `DataArchetypeArchetype`, `EffectorArchetype`, `ReceptorArchetype`, `InteractionArchetype` |
+| `sis:Statement`  | Draft GSM Statement: "here is the materialized statement"               | `StructureStatement`, `MechanismStatement`, `DataArchetypeStatement`, `EffectorStatement`, `ReceptorStatement`, `InteractionStatement` |
 
 **Subjects** (6, mapped to GSM primitives):
 
@@ -211,7 +211,7 @@ derivation, consumed by the `*IdentificationKs` of each subject):
 | Package / module / class cluster                      | `Structure*`                     |
 
 `Norm` and `Directive` GSM primitives are **out of scope** for the
-repository sourcer (they are sourced by other ITIP framework sourcers,
+repository sourcer (they are sourced by other OIP framework sourcers,
 not by code-repo analysis).
 
 ## Out of scope (explicitly)
@@ -232,13 +232,13 @@ therefore **not** part of this sourcer's design contract:
 - IaC / Terraform / Helm / Kustomize sourcing
 
 The authoritative skill for the REST architecture is
-[`definition-blackboard-manager`](../../.github/skills/definition-blackboard-manager/SKILL.md)
+[`blackboard-manager`](../../.github/skills/blackboard-manager/SKILL.md)
 (covers both the service and the client sourcer authoring contract).
 
 ## See also
 
-- Blackboard service: [sie/sie-definition-blackboard-manager/](../../sie/sie-definition-blackboard-manager/)
-- Service component diagram: [component.puml](../../sie/sie-definition-blackboard-manager/def/blackboard/component.puml)
+- Blackboard service: [sis/sis-blackboard-manager/](../../sis/sis-blackboard-manager/)
+- Service component diagram: [component.puml](../../sis/sis-blackboard-manager/def/blackboard/component.puml)
 - Components (this sourcer): [components.puml](def/components.puml)
 - Sourcing workflow: [sourcing-workflow.puml](def/sourcing-workflow.puml)
 

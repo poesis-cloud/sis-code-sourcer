@@ -14,8 +14,8 @@ package scip;
 
 option go_package = "github.com/scip-code/scip/bindings/go/scip/";
 
-// Java codegen options (added for ITIP sourcer; does not affect wire format).
-option java_package = "cloud.poesis.itip.sourcer.scip";
+// Java codegen options (added for SIS Code Sourcer; does not affect wire format).
+option java_package = "cloud.poesis.sis.sourcer.scip";
 option java_outer_classname = "Scip";
 option java_multiple_files = false;
 

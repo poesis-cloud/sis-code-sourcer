@@ -32,6 +32,6 @@ RUN set -eux; \
     rm -rf /var/lib/apt/lists/*
 # ---------------------------------------------------------------------------
 
-COPY --from=build /workspace/target/itip-definition-blackboard-repository-sourcer-1.0.0-SNAPSHOT.jar /app/app.jar
+COPY --from=build /workspace/target/sis-code-sourcer-1.0.0-SNAPSHOT.jar /app/app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]

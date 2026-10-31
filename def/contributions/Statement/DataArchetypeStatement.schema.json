@@ -1,19 +1,19 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "bb://itip/blackboard/Statement/DataArchetypeStatement/v1",
+  "$id": "bb://sis/blackboard/Statement/DataArchetypeStatement/v1",
   "title": "DataArchetypeStatementContribution",
   "description": "Confidence-weighted draft GSM Statement materializing an archetyped data shape (DTO, entity, schema record) candidate; maps to GSM Archetype primitive in the data-shape role. Emitted by DataArchetypeStatementKs by reading the upstream DataArchetypeArchetype slot. Promoted to a definitive Ascription downstream by the post-reduction pipeline calling DefinitionManager. Carries a confidence envelope (score < 1.0 by construction) and a provenance envelope (producing KS, indexed revision, tool versions, rule snapshot sha, seeds) for full reproducibility.",
   "type": "object",
   "allOf": [ {
     "properties": {
       "confidence": {
-        "$ref": "bb://itip/blackboard/confidence-envelope/v1#"
+        "$ref": "bb://sis/blackboard/confidence-envelope/v1#"
       }
     }
   }, {
     "properties": {
       "provenance": {
-        "$ref": "bb://itip/blackboard/provenance-envelope/v1#"
+        "$ref": "bb://sis/blackboard/provenance-envelope/v1#"
       }
     }
   } ],

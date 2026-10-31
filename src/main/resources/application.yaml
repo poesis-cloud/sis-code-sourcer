@@ -3,13 +3,13 @@ server:
 
 spring:
   application:
-    name: itip-definition-blackboard-repository-sourcer
+    name: sis-code-sourcer
   security:
     oauth2:
       client:
         registration:
           blackboard:
-            client-id: ${OAUTH2_CLIENT_ID:itip-sourcer}
+            client-id: ${OAUTH2_CLIENT_ID:sis-code-sourcer}
             client-secret: ${OAUTH2_CLIENT_SECRET:change-me}
             authorization-grant-type: client_credentials
             scope: blackboard.contribute

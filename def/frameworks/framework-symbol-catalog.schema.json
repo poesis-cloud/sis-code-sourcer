@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://poesis.dev/itip/sourcer/framework-symbol-catalog.schema.json",
+  "$id": "https://poesis.dev/sis/sourcer/framework-symbol-catalog.schema.json",
   "title": "FrameworkSymbolCatalog",
-  "description": "Faithful projection of a framework's annotation/method/type bytecode. Carries ONLY facts present in the framework's published jars (annotation FQNs, @Target, @Retention, meta-annotations with their concrete attribute values, attribute declarations with @AliasFor links, method parameter names + types, type-hierarchy bases). Carries NO ITIP-specific role buckets — KSs derive roles by querying this projection (e.g. 'transitively meta-annotated with org.springframework.web.bind.annotation.RequestMapping' = endpoint annotation; HTTP verb is read from the resolved @RequestMapping(method=...) attribute).",
+  "description": "Faithful projection of a framework's annotation/method/type bytecode. Carries ONLY facts present in the framework's published jars (annotation FQNs, @Target, @Retention, meta-annotations with their concrete attribute values, attribute declarations with @AliasFor links, method parameter names + types, type-hierarchy bases). Carries NO OIP-specific role buckets — KSs derive roles by querying this projection (e.g. 'transitively meta-annotated with org.springframework.web.bind.annotation.RequestMapping' = endpoint annotation; HTTP verb is read from the resolved @RequestMapping(method=...) attribute).",
   "type": "object",
   "required": [ "frameworkId", "version", "extractedFrom" ],
   "additionalProperties": false,

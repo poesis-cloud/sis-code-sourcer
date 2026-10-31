@@ -6,9 +6,9 @@ SHELL := /bin/bash
 -include .env
 -include .env.dev
 
-NAMESPACE ?= sie
+NAMESPACE ?= sis
 DEPLOY_ENV ?= preprod
-RELEASE ?= itip-definition-blackboard-repository-sourcer
+RELEASE ?= sis-code-sourcer
 
 SOURCER_CHART ?= ./ops/helm
 SOURCER_ENV_FILE ?= $(SOURCER_CHART)/environments/$(DEPLOY_ENV)/values.yaml

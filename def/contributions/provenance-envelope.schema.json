@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "bb://itip/blackboard/provenance-envelope/v1",
+  "$id": "bb://sis/blackboard/provenance-envelope/v1",
   "title": "ProvenanceEnvelope",
   "description": "Provenance envelope embedded in every blackboard contribution. Captures the producing KS, the indexed source revision, the deterministic toolchain (with versions) used to build the in-memory SourcerContext consumed by the KS, the sha256 of the rule snapshot driving non-deterministic selection, and any RNG seeds used. Together with ConfidenceEnvelope this is sufficient to reproduce the identification (re-run the KS over a re-derived SourcerContext at the same indexedRevision with the same tool versions, ruleSnapshotSha256 and seeds).",
   "type": "object",
@@ -8,7 +8,7 @@
   "properties": {
     "ks": {
       "type": "string",
-      "description": "Fully-qualified producing KS identifier including version (e.g. 'itip:java:StructureIdentificationKs@1.3.0')."
+      "description": "Fully-qualified producing KS identifier including version (e.g. 'sis:java:StructureIdentificationKs@1.3.0')."
     },
     "indexedRevision": {
       "type": "string",

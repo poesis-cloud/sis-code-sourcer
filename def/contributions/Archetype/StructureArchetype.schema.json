@@ -1,19 +1,19 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "bb://itip/blackboard/Archetype/StructureArchetype/v1",
+  "$id": "bb://sis/blackboard/Archetype/StructureArchetype/v1",
   "title": "StructureArchetypeContribution",
   "description": "Confidence-weighted archetype match asserting that a previously-identified structural unit (package, module, class cluster) candidate matches a known Structure archetype catalog entry. Emitted by StructureArchetypingKs by reading the upstream StructureIdentity slot and the in-memory SourcerContext. Carries a confidence envelope (score < 1.0 by construction) and a provenance envelope (producing KS, indexed revision, tool versions, rule snapshot sha, seeds) for full reproducibility.",
   "type": "object",
   "allOf": [ {
     "properties": {
       "confidence": {
-        "$ref": "bb://itip/blackboard/confidence-envelope/v1#"
+        "$ref": "bb://sis/blackboard/confidence-envelope/v1#"
       }
     }
   }, {
     "properties": {
       "provenance": {
-        "$ref": "bb://itip/blackboard/provenance-envelope/v1#"
+        "$ref": "bb://sis/blackboard/provenance-envelope/v1#"
       }
     }
   } ],

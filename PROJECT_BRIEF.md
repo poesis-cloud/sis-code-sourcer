@@ -1,10 +1,10 @@
-# PROJECT_BRIEF.md — ITIP Definition Blackboard Repository Sourcer
+# PROJECT_BRIEF.md — SIS Code Sourcer
 
 > Last updated: 2025-07 | Sprint 0 | Status: In Progress
 
 ## 1. Project Overview
 
-`itip-definition-blackboard-repository-sourcer` is a **client-side sourcer** that turns a code repository into GSM contributions posted to the Definition Blackboard Manager REST service. It implements the client-side contract of the Definition Blackboard protocol: declare panels, run 18 KnowledgeSource implementations across 3 stages, and post confidence-bearing identifications as contributions. Deterministic tool outputs (SCIP index, CPG, SBOM) are held **in-memory only** — never persisted.
+`sis-code-sourcer` is a **client-side sourcer** that turns a code repository into GSM contributions posted to the Blackboard Manager REST service. It implements the client-side contract of the Definition Blackboard protocol: declare panels, run 18 KnowledgeSource implementations across 3 stages, and post confidence-bearing identifications as contributions. Deterministic tool outputs (SCIP index, CPG, SBOM) are held **in-memory only** — never persisted.
 
 ## 2. Concept / Product Description
 
@@ -13,7 +13,7 @@ The sourcer runs as a single-JVM client process. It hosts four packages:
 1. **KS contract** — `KnowledgeSource` abstract class (getFqn, getSourceContributionSlots, getTargetContributionSlots, isContributableBlackboard, contributeToBlackboard).
 2. **Services** — stateful/stateless services owning all in-memory context: `ScipService`, `CpgService`, `SbomService`, `LeidenAlgService`, `MappingService`, `InferenceService`, `DefinitionBlackboardService`.
 3. **KSs** — 18 concrete KnowledgeSource subclasses, 3 stages x 6 GSM subjects (`*IdentificationKs`, `*ArchetypingKs`, `*StatementKs`).
-4. **Blackboard** — REST resource hosted by `sie-definition-blackboard-manager`; 3 panels x 6 slots = 18 slots.
+4. **Blackboard** — REST resource hosted by `sis-blackboard-manager`; 3 panels x 6 slots = 18 slots.
 
 **Core invariant:** The blackboard hosts **only** confidence-bearing identifications (`confidence.score < 1.0`). Deterministic outputs are never persisted.
 
@@ -21,9 +21,9 @@ The sourcer runs as a single-JVM client process. It hosts four packages:
 
 | Panel | Stage | Slots |
 |-------|-------|-------|
-| `itip:Definition` | Candidate identification | `*Identity` x 6 subjects |
-| `itip:Archetype` | Archetype match | `*Archetype` x 6 subjects |
-| `itip:Statement` | Draft GSM Statement | `*Statement` x 6 subjects |
+| `sis:Definition` | Candidate identification | `*Identity` x 6 subjects |
+| `sis:Archetype` | Archetype match | `*Archetype` x 6 subjects |
+| `sis:Statement` | Draft GSM Statement | `*Statement` x 6 subjects |
 
 **Promotion DAG:** `Definition (*Identity) -> Archetype (*Archetype) -> Statement (*Statement)`
 
@@ -34,13 +34,13 @@ The sourcer runs as a single-JVM client process. It hosts four packages:
 - **Build:** Maven
 - **Deployment:** Helm + Kubernetes (AKS), namespace `sie`
 - **Testing:** JUnit 5, Mockito, JaCoCo (>=95% instruction coverage required)
-- **External deps:** `sie-definition-blackboard-manager` REST API
+- **External deps:** `sis-blackboard-manager` REST API
 
 ## 4. Architecture
 
 ```
 +------------------------------------------------------------------------+
-|  itip-definition-blackboard-repository-sourcer  (single JVM)           |
+|  sis-code-sourcer  (single JVM)           |
 |                                                                         |
 |  +-------------+   +----------------------------------------------+   |
 |  | KS contract |   | Services (in-memory, stateful or stateless)   |   |
@@ -56,7 +56,7 @@ The sourcer runs as a single-JVM client process. It hosts four packages:
 +------------------------------------------+-----------------------------+
                                            | HTTPS REST
 +------------------------------------------v-----------------------------+
-|  sie-definition-blackboard-manager                                      |
+|  sis-blackboard-manager                                      |
 |  /blackboards/{bbId}/panels  /blackboards/{bbId}/contributions          |
 |  Blackboard-seal lifecycle: open -> sealed -> byte-stable               |
 +-------------------------------------------------------------------------+
@@ -101,7 +101,7 @@ The sourcer runs as a single-JVM client process. It hosts four packages:
 
 **What does not work yet:**
 - No Java implementation (KS contract, Services, KSs not yet written)
-- No integration with `sie-definition-blackboard-manager`
+- No integration with `sis-blackboard-manager`
 
 **What is next:**
 - Sprint 1: Implement `KnowledgeSource` abstract contract + all 7 Services skeleton
@@ -109,7 +109,7 @@ The sourcer runs as a single-JVM client process. It hosts four packages:
 ## 9. Security Rules
 
 1. Secrets (API keys, OAuth credentials) in environment variables only — never in code or git.
-2. OAuth2 client credentials flow for `sie-definition-blackboard-manager` REST calls.
+2. OAuth2 client credentials flow for `sis-blackboard-manager` REST calls.
 3. `.env.dev` for local dev secrets — never committed.
 4. Never post `confidence.score >= 1.0` to the blackboard (core invariant violation).
 5. Never attempt to post contributions to a sealed blackboard (Blackboard isolation invariant).
@@ -148,7 +148,7 @@ Continue from where it left off.
 
 ## 13. Bug & Fix Tracking
 
-Bugs tracked as GitHub Issues on `poesis-cloud/itip-definition-blackboard-repository-sourcer`.
+Bugs tracked as GitHub Issues on `poesis-cloud/sis-code-sourcer`.
 
 - **QA:** File bugs with labels (`bug`, `severity:blocker/major/minor`). Include: component, steps to reproduce, expected vs actual.
 - **Dev:** Check issues before starting. Use `fix: description (Fixes #NN)` in commits.
@@ -159,8 +159,8 @@ Bugs tracked as GitHub Issues on `poesis-cloud/itip-definition-blackboard-reposi
 Each team works in their own separate clone:
 
 ```bash
-git clone git@github.com:poesis-cloud/itip-definition-blackboard-repository-sourcer.git sourcer-dev
-git clone git@github.com:poesis-cloud/itip-definition-blackboard-repository-sourcer.git sourcer-qa
+git clone git@github.com:poesis-cloud/sis-code-sourcer.git sourcer-dev
+git clone git@github.com:poesis-cloud/sis-code-sourcer.git sourcer-qa
 ```
 
 **Branch strategy:** `feature/sprint-N` -> PR -> merge to main. Never squash. Never rebase feature branches.
