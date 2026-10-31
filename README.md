@@ -8,7 +8,8 @@
 [![License: BUSL-1.1](https://img.shields.io/badge/license-BUSL--1.1-blue)](LICENSE)
 
 A **client sourcer** that turns a code repository (an IT system's
-source tree) into GSM contributions posted to a Definition Blackboard.
+source tree) into GSM contributions posted to a Definition Blackboard hosted by
+SIS Blackboard Manager.
 Runs as a single-JVM client process and speaks REST to the
 [Blackboard Manager](../../sis/sis-blackboard-manager/).
 
