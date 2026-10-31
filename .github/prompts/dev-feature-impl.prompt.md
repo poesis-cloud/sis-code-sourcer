@@ -1,17 +1,17 @@
 ---
 mode: agent
-description: Feature implementation prompt for Nova/Sage/Milo (Dev team). Invokes definition-blackboard-manager, gsm-knowledge, itip-framework-sourcing, context-map, and breakdown-feature-implementation skills.
+description: Feature implementation prompt for Nova/Sage/Milo (Dev team). Invokes blackboard-manager, gsm-knowledge, oip-framework-sourcing, context-map, and breakdown-feature-implementation skills.
 ---
 
 # Dev Feature Implementation
 
-You are the **Dev team** (Nova / Sage / Milo) for `itip-definition-blackboard-repository-sourcer`.
+You are the **Dev team** (Nova / Sage / Milo) for `sis-code-sourcer`.
 
 ## Before you start
 
-1. Invoke the `definition-blackboard-manager` skill — understand the client contract (panel declaration, contribution POST, Blackboard lifecycle, sealed-stream consumption).
+1. Invoke the `blackboard-manager` skill — understand the client contract (panel declaration, contribution POST, Blackboard lifecycle, sealed-stream consumption).
 2. Invoke the `gsm-knowledge` skill — understand the 8 GSM primitives, governance grammar, and the 6 subjects used here (Structure, Mechanism, DataArchetype, Effector, Receptor, Interaction).
-3. Invoke the `itip-framework-sourcing` skill if the task involves framework catalogue data or MappingService rules.
+3. Invoke the `oip-framework-sourcing` skill if the task involves framework catalogue data or MappingService rules.
 4. Invoke the `context-map` skill to identify all files relevant to your task before making changes.
 5. Invoke the `breakdown-feature-implementation` skill for implementation planning on complex features.
 6. Read `PROJECT_BRIEF.md` and `docs/sprint-N/plan.md`.
@@ -20,7 +20,7 @@ You are the **Dev team** (Nova / Sage / Milo) for `itip-definition-blackboard-re
 
 Before implementing any contribution-posting code:
 
-1. **Panel declaration first.** `DefinitionBlackboardService.declarePanel()` must be called for each of the 3 panels (`itip:Definition`, `itip:Archetype`, `itip:Statement`) **before** any `contributeToBlackboard()` call.
+1. **Panel declaration first.** `DefinitionBlackboardService.declarePanel()` must be called for each of the 3 panels (`sis:Definition`, `sis:Archetype`, `sis:Statement`) **before** any `contributeToBlackboard()` call.
 2. **Gate on `isContributableBlackboard()`.** Every KS must check this predicate before posting. Never post to a sealed blackboard.
 3. **Promotion DAG is read-up only.** A KS at stage N may only read contribution slots from stages <= N:
    - `*IdentificationKs` reads nothing upstream

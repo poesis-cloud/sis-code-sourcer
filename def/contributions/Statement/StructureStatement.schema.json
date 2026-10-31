@@ -1,19 +1,19 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "bb://itip/blackboard/Statement/StructureStatement/v1",
+  "$id": "bb://sis/blackboard/Statement/StructureStatement/v1",
   "title": "StructureStatementContribution",
   "description": "Confidence-weighted draft GSM Statement materializing an archetyped structural unit (package, module, class cluster) candidate. Emitted by StructureStatementKs by reading the upstream StructureArchetype slot. Promoted to a definitive Ascription downstream by the post-reduction pipeline calling DefinitionManager. Carries a confidence envelope (score < 1.0 by construction) and a provenance envelope (producing KS, indexed revision, tool versions, rule snapshot sha, seeds) for full reproducibility.",
   "type": "object",
   "allOf": [ {
     "properties": {
       "confidence": {
-        "$ref": "bb://itip/blackboard/confidence-envelope/v1#"
+        "$ref": "bb://sis/blackboard/confidence-envelope/v1#"
       }
     }
   }, {
     "properties": {
       "provenance": {
-        "$ref": "bb://itip/blackboard/provenance-envelope/v1#"
+        "$ref": "bb://sis/blackboard/provenance-envelope/v1#"
       }
     }
   } ],

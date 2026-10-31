@@ -19,7 +19,7 @@ skinparam sequence {
 skinparam noteBackgroundColor #FFF8C5
 skinparam noteBorderColor #57606A
 
-title ITIP Definition Blackboard Repository Sourcer - Sourcing workflow\n(aligned to components.puml: KSs depend on Services; Services post contributions to the Blackboard)
+title SIS Code Sourcer - Sourcing workflow\n(aligned to components.puml: KSs depend on Services; Services post contributions to the Blackboard)
 
 ' ---- KSs (single representative per stage; the 6 subjects iterate inside each loop) ----
 participant "Identification KS\n(<Subject>IdentificationKs)" as KID
@@ -43,7 +43,7 @@ participant "Blackboard\n(REST; 3 panels x 18 slots)" as BB
 DBS -> BB : POST /blackboards (BlackboardConfig)
 BB --> DBS : 201 + bbId + ETag
 
-DBS -> BB : POST /blackboards/{bbId}/panels\n  3 panels x 6 slots = 18 slots\n  itip:Definition / itip:Archetype / itip:Statement
+DBS -> BB : POST /blackboards/{bbId}/panels\n  3 panels x 6 slots = 18 slots\n  sis:Definition / sis:Archetype / sis:Statement
 BB --> DBS : 200 (topology frozen on first contribution POST)
 
 == Phase 1 - Identification (write Definition panel) ==
@@ -69,7 +69,7 @@ loop for each Subject in {Structure, Mechanism, DataArchetype, Effector, Recepto
   Map --> KID : archetypeUri? + properties
 
   KID -> KID : embed non-deterministic selection\n  (e.g. Leiden for Structure;\n   taint-reach for Effector/Receptor/Interaction;\n   structural heuristics for Mechanism/DataArchetype)
-  KID -> DBS : contributeToBlackboard(\n    panel=itip:Definition,\n    slot=<Subject>Identity,\n    post={subject, evidence[],\n          confidence:{score<1.0, method, factors[]},\n          provenance:{ks@version, indexedRevision,\n                      tools[], ruleSnapshotSha256, seeds[]}})
+  KID -> DBS : contributeToBlackboard(\n    panel=sis:Definition,\n    slot=<Subject>Identity,\n    post={subject, evidence[],\n          confidence:{score<1.0, method, factors[]},\n          provenance:{ks@version, indexedRevision,\n                      tools[], ruleSnapshotSha256, seeds[]}})
   DBS -> BB : POST /blackboards/{bbId}/contributions
   BB --> DBS : 201 + contributionId
   DBS --> KID : contributionId
@@ -88,7 +88,7 @@ loop for each Subject
   KAR -> Map : refine archetype + extractProperties
   Map --> KAR : archetypeUri + properties
 
-  KAR -> DBS : contributeToBlackboard(\n    panel=itip:Archetype,\n    slot=<Subject>Archetype,\n    post={subject, evidence[], confidence, provenance})
+  KAR -> DBS : contributeToBlackboard(\n    panel=sis:Archetype,\n    slot=<Subject>Archetype,\n    post={subject, evidence[], confidence, provenance})
   DBS -> BB : POST /blackboards/{bbId}/contributions
   BB --> DBS : 201 + contributionId
 
@@ -111,7 +111,7 @@ loop for each Subject
     Map --> KST : properties
   end
 
-  KST -> DBS : contributeToBlackboard(\n    panel=itip:Statement,\n    slot=<Subject>Statement,\n    post={subject, draftStatement, evidence[],\n          confidence, provenance})
+  KST -> DBS : contributeToBlackboard(\n    panel=sis:Statement,\n    slot=<Subject>Statement,\n    post={subject, draftStatement, evidence[],\n          confidence, provenance})
   DBS -> BB : POST /blackboards/{bbId}/contributions
   BB --> DBS : 201 + contributionId
 

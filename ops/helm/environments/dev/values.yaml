@@ -3,7 +3,7 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/your-org/itip-definition-blackboard-repository-sourcer
+  repository: ghcr.io/your-org/sis-code-sourcer
   tag: "0.1.0"
   pullPolicy: IfNotPresent
 
@@ -26,9 +26,9 @@ ingress:
   tls: []
 
 env:
-  BLACKBOARD_BASE_URL: http://sie-definition-blackboard-manager.sie.svc.cluster.local:8080
+  BLACKBOARD_BASE_URL: http://sis-blackboard-manager.sis.svc.cluster.local:8080
   OIDC_ISSUER_URI: http://localhost:9000/realms/sie
-  OAUTH2_CLIENT_ID: itip-sourcer
+  OAUTH2_CLIENT_ID: sis-code-sourcer
   OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector.monitoring.svc.cluster.local:4317
 
 secrets:
